@@ -29,7 +29,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     // passwordChangedAt: req.body.passwordChangedAt,
-    role: req.body.role,
+    // role: req.body.role, -> NOT do it here, only in mongoDB for security reasons
   });
 
   createSendToken(newUser, 201, res);
