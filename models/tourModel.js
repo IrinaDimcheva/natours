@@ -154,6 +154,16 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
+tourSchema.pre(/^find/, function (next) {
+  // In query middleware 'this' always points to the current query
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
+
+  next();
+});
+
 tourSchema.post(/^find/, function (docs, next) {
   console.log(`The query took ${Date.now() - this.start} milliseconds!`);
   // console.log(docs);
