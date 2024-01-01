@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -25,6 +26,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Set security HTTP headers
 app.use(helmet());
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       baseUri: ["'self'"],
+//       fontSrc: ["'self'", 'https:', 'data:'],
+//       scriptSrc: [
+//         "'self'",
+//         'https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.3/axios.min.js',
+//       ],
+//       objectSrc: ["'none'"],
+//       styleSrc: ["'self'", 'https:', 'unsafe-inline'],
+//       upgradeInsecureRequests: [],
+//     },
+//   }),
+// );
 
 // Further HELMET configuration for Security Policy (CSP)
 const scriptSrcUrls = ['https://unpkg.com/', 'https://tile.openstreetmap.org'];
@@ -40,14 +57,19 @@ const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: [],
+      defaultSrc: ["'self'"],
+      baseUri: ["'self'"],
       connectSrc: ["'self'", ...connectSrcUrls],
-      scriptSrc: ["'self'", ...scriptSrcUrls],
-      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      scriptSrc: [
+        "'self'",
+        'https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.3/axios.min.js',
+        ...scriptSrcUrls,
+      ],
+      styleSrc: ["'self'", 'https:', "'unsafe-inline'", ...styleSrcUrls],
       workerSrc: ["'self'", 'blob:'],
-      objectSrc: [],
+      objectSrc: ["'none'"],
       imgSrc: ["'self'", 'blob:', 'data:', 'https:'],
-      fontSrc: ["'self'", ...fontSrcUrls],
+      fontSrc: ["'self'", 'https:', 'data:', ...fontSrcUrls],
     },
   }),
 );
@@ -67,6 +89,7 @@ app.use('/api', limiter);
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
@@ -92,6 +115,7 @@ app.use(
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   // console.log(req.headers);
+  console.log(req.cookies);
   next();
 });
 
