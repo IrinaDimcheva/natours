@@ -1,10 +1,11 @@
 import 'regenerator-runtime/runtime';
 import { displayMap } from './mapbox.js';
-import { login } from './login';
+import { login, logout } from './login';
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form');
+const logoutBtn = document.querySelector('.nav__el--logout');
 
 // DELEGATION
 if (mapBox) {
@@ -19,3 +20,5 @@ loginForm?.addEventListener('submit', (e) => {
   const password = document.getElementById('password').value;
   login(email, password);
 });
+
+logoutBtn?.addEventListener('click', logout);
