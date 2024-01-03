@@ -1,11 +1,13 @@
 import 'regenerator-runtime/runtime';
 import { displayMap } from './mapbox.js';
 import { login, logout } from './login';
+import { updateData } from './updateSettings';
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
+const userDataForm = document.querySelector('.form-user-data');
 
 // DELEGATION
 if (mapBox) {
@@ -22,3 +24,10 @@ loginForm?.addEventListener('submit', (e) => {
 });
 
 logoutBtn?.addEventListener('click', logout);
+
+userDataForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  updateData(name, email);
+});
