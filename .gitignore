@@ -2,3 +2,5 @@ node_modules
 config.env
 public/js/bundled*
 .parcel-cache*
+
+public/img/users
