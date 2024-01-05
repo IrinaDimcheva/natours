@@ -3,4 +3,4 @@ config.env
 public/js/bundled*
 .parcel-cache*
 
-public/img/users
+public/img
