@@ -1,13 +1,13 @@
 const nodemailer = require('nodemailer');
 const pug = require('pug');
-const htmlToText = require('html-to-text');
+const { compile } = require('html-to-text');
 
 // new Email(user, url).sendWelcome();
 
 module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;
-    this.firstName = user.name;
+    this.firstName = user.name.split(' ')[0];
     this.url = url;
     this.from = `Irina Dimcheva <${process.env.EMAIL_FROM}>`;
   }
@@ -43,7 +43,7 @@ module.exports = class Email {
       to: this.to,
       subject,
       html,
-      text: htmlToText.fromString(html),
+      text: compile(html),
     };
 
     // 3) Create a transport and send email
