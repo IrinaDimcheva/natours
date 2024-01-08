@@ -1,6 +1,6 @@
-node_modules
-config.env
+node_modules/
+*.env
 public/js/bundled*
 .parcel-cache*
 
-public/img
+# public/img
