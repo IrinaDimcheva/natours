@@ -6,6 +6,10 @@
   "targets": {
     "main": false
   },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
@@ -55,9 +59,5 @@
     "nodemon": "^3.0.2",
     "parcel": "^2.10.3",
     "prettier": "^3.1.0"
-  },
-  "engines": {
-    "node": ">=20.10.0"
-  },
-  "browserslist": "> 0.5%, last 2 versions, not dead"
+  }
 }
