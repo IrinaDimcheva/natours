@@ -1,6 +1,3 @@
 node_modules/
 *.env
-public/js/bundled*
-.parcel-cache*
-
-# public/img
+.parcel-cache/

@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -76,48 +77,6 @@ app.use(
   }),
 );
 
-// // Further HELMET configuration for Security Policy (CSP)
-// const scriptSrcUrls = ['https://unpkg.com/', 'https://tile.openstreetmap.org'];
-// const styleSrcUrls = [
-//   'https://unpkg.com/',
-//   'https://tile.openstreetmap.org',
-//   'https://fonts.googleapis.com/',
-// ];
-// const connectSrcUrls = [
-//   'https://unpkg.com',
-//   'https://tile.openstreetmap.org',
-//   'https://*.stripe.com',
-//   'https://bundle.js:*',
-//   'ws://127.0.0.1:*/',
-// ];
-// const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
-
-// //set security http headers
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     directives: {
-//       defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:'],
-//       baseUri: ["'self'"],
-//       connectSrc: [
-//         "'self'",
-//         'https://bundle.js:*',
-//         'ws://127.0.0.1:*/',
-//         ...connectSrcUrls,
-//       ],
-//       scriptSrc: [
-//         "'self'",
-//         'https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.3/axios.min.js',
-//         ...scriptSrcUrls,
-//       ],
-//       styleSrc: ["'self'", 'https:', "'unsafe-inline'", ...styleSrcUrls],
-//       workerSrc: ["'self'", 'blob:'],
-//       objectSrc: ["'none'"],
-//       imgSrc: ["'self'", 'blob:', 'data:', 'https:'],
-//       fontSrc: ["'self'", 'https:', 'data:', ...fontSrcUrls],
-//     },
-//   }),
-// );
-
 // Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -155,6 +114,8 @@ app.use(
     ],
   }),
 );
+
+app.use(compression());
 
 // Test middleware
 app.use((req, res, next) => {
