@@ -9,18 +9,20 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-dotenv.config({ path: `${__dirname}/config.env` });
+dotenv.config({ path: './config.env' });
 const app = require('./app');
 
 // console.log(app.get('env'));
 // console.log(process.env);
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD,
-);
+// const DB = process.env.DATABASE.replace(
+//   '<PASSWORD>',
+//   process.env.DATABASE_PASSWORD,
+// );
 
-mongoose.connect(DB).then(() => console.log('Connection successful!'));
+const DB = process.env.DATABASE;
+
+mongoose.connect(DB).then(() => console.log('DB connection successful!'));
 // mongoose
 //   .connect(process.env.DATABASE_LOCAL)
 //   .then(() => console.log('Connected to Database'));
@@ -31,8 +33,8 @@ const server = app.listen(port, () => {
 });
 
 process.on('unhandledRejection', (err) => {
-  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
   console.log(err.name, err.message);
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
   server.close(() => {
     process.exit(1);
   });
