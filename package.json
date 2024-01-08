@@ -7,7 +7,7 @@
     "main": false
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=20.9.0 <21.0.0"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
@@ -18,7 +18,15 @@
     "watch:js": "parcel watch --no-hmr ./public/js/index.js --dist-dir ./public/js/bundled",
     "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js/bundled"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IrinaDimcheva/natours.git"
+  },
   "author": "Irina Dimcheva",
+  "bugs": {
+    "url": "https://github.com/IrinaDimcheva/natours/issues"
+  },
+  "homepage": "https://github.com/IrinaDimcheva/natours#readme",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.3",
