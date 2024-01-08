@@ -2,6 +2,7 @@ import 'regenerator-runtime/runtime';
 import { displayMap } from './mapbox.js';
 import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
+import { bookTour } from './stripe.js';
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
@@ -9,6 +10,7 @@ const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
+const bookBtn = document.getElementById('book-tour');
 
 // DELEGATION
 if (mapBox) {
@@ -53,4 +55,10 @@ userPasswordForm?.addEventListener('submit', async (e) => {
   document.getElementById('password-current').value = '';
   document.getElementById('password').value = '';
   document.getElementById('password-confirm').value = '';
+});
+
+bookBtn?.addEventListener('click', (e) => {
+  e.target.textContent = 'Processing...';
+  const { tourId } = e.target.dataset;
+  bookTour(tourId);
 });
