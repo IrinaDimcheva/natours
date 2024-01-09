@@ -18,7 +18,15 @@ const createSendToken = (user, statusCode, req, res) => {
     ),
     httpOnly: true,
     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    // React setup
+    // secure: true,
+    // sameSite: 'none',
   };
+  // React setup
+  // if (req.get('X-Forwarded-Proto') === 'https') {
+  //   cookieOptions.secure = true;
+  // }
+
   // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
   res.cookie('jwt', token, cookieOptions);
